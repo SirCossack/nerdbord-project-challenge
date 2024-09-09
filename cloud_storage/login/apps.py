@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CloudStorageConfig(AppConfig):
+class LoginConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cloud_storage'
+    name = 'login'
