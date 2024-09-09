@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'login.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+        <div id='section1' class='section1'>
+                <form action="/login/" method="post">
+                    <label for="Email">E-mail: </label>
+                    <input id="Email" type="text" name="Email" value="{{ current_email }}">
+
+                    <label for="Password">Password: </label>
+                    <input id="Password" type="text" name="Password" value="{{ current_password }}">
+
+                    <input type="submit" value="Log In">
+                </form>
+
+        </div>
+
+</body>
+</html>
