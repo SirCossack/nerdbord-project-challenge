@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'login.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,20 +8,57 @@
     <title>Title</title>
 </head>
 <body>
-<h1 style="font-size: 20"> {{ signorlog }} </h1>
-        <div></div>
-        <div id='section1' class='section1'>
-                <form action="/{{action}}/" method="post">
-                    {% csrf_token %}
-                    <label for="Email">E-mail: </label>
-                    <input id="Email" type="text" name="Email" value="{{ current_email }}">
 
-                    <label for="Password">Password: </label>
-                    <input id="Password" type="text" name="Password" value="{{ current_password }}">
+<div class="login">
+    <div class="form">
+        <h1 style="font-size: 20"> {{ signorlog }} </h1>
+        <h2 style="font-size: 14">{{ note }}</h2>
+        <form class="registration-form" action="/{{action}}/" method="post">
+            {% csrf_token %}
+            <input id="Email" placeholder="e-mail" type="text" name="Email" value="{{ current_email }}"/>
+            <input id="Password" placeholder="password" type="password" name="Password" value="{{ current_password }}"/>
+            <input type="submit" value={{signorlog}}>
+        </form>
+    </div>
+</div>
 
-                    <input type="submit" value={{signorlog}}>
-                </form>
-        </div>
-<h2 style="font-size: 20">{{ note }}</h2>
+
 </body>
 </html>
+
+<!--<div class="forma">-->
+<!--    <h1 style="font-size: 20"> {{ signorlog }} </h1>-->
+<!--    <form action="/{{action}}/" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <label for="Email">E-mail: </label>-->
+<!--        <input id="Email" type="text" name="Email" value="{{ current_email }}">-->
+
+<!--        <label for="Password">Password: </label>-->
+<!--        <input id="Password" type="password" name="Password" value="{{ current_password }}">-->
+
+<!--        <input type="submit" value={{signorlog}}>-->
+<!--    </form>-->
+<!--    <h2 style="font-size: 20">{{ note }}</h2>-->
+<!--</div>-->
+
+
+
+<!--<div class="login">-->
+<!--    <div class="form">-->
+<!--        <form class="registration-form">-->
+<!--            <input type="text" placeholder="name" />-->
+<!--            <input type="password" placeholder="password" />-->
+<!--            <input type="text" placeholder="email" />-->
+<!--            <button>Create</button>-->
+<!--            <p><a href="#">Log In</a></p>-->
+<!--        </form>-->
+<!--        <form class="login-form">-->
+<!--            <input type="text" placeholder="username" />-->
+<!--            <input type="password" placeholder="password" />-->
+<!--            <button>Login</button>-->
+<!--            <p><a href="#">Register</a></p>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+

@@ -13,7 +13,12 @@ def signup(request):
 
 
 def signing(request):
-    supabase.auth.sign_up({'email':request.POST['Email'], 'password': request.POST['Password']})
+    try:
+        supabase.auth.sign_up({'email':request.POST['Email'], 'password': request.POST['Password']})
+    except (AuthInvalidCredentialsError, AuthApiError):
+        return render(request, 'login.html', context={'action': 'signing', 'signorlog': "Sign up:",
+                                                      "note": "Invalid credentials"})
+
     return HttpResponseRedirect("/loggedin/")
 
 def login(request):
@@ -23,8 +28,9 @@ def login(request):
     except AuthApiError:
         return HttpResponseRedirect('/signup/')
 
+
     except AuthInvalidCredentialsError:
-        raise AuthInvalidCredentialsError("Please enter valid credentials.")
+        return render(request, 'login.html', context={'action': 'login', 'signorlog': "Log in:", 'note': "Invalid credentials"})
 
     return HttpResponseRedirect("/loggedin/")
 
