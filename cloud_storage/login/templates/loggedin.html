@@ -33,7 +33,13 @@
 </div>
 
 <div class="content">
-  loremipsum
+        <caption> Your files: </caption>
+        <ul class="unorderedlist">
+          {% for file in storage %}
+            <li class="listitem"> {{file.name}} <small> {{deldow}} </small>  </li>
+            {% endfor %}
+        </ul>
+
 </div>
 </body>
 </html>

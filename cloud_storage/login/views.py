@@ -47,26 +47,26 @@ def loggedin(request):
     if user:
         id = json.loads(user.model_dump_json())['user']['id']
         username = json.loads(supabase.auth.get_user().model_dump_json())['user']['user_metadata']['email']
+        storage = supabase.storage.from_('Files').list("{}".format(id))[1:] #skipping EmptyFolderPlaceholder object and ensuring each user gets his files by using folder id
         if request.FILES:
             try:
                 file = request.FILES['uploadedfile']
                 filename = file.name
                 size = file.size
-                print(size)
                 if size > 5000000:
                     return render(request, "loggedin.html",
-                                  context={'username': username, "filenote": "File too big"})
+                                  context={'storage': storage, 'username': username, "filenote": "File too big"})
                 mime_type, encoding = mimetypes.guess_type(filename)
                 if mime_type.startswith('image/') or mime_type.startswith('text/'):
                     supabase.storage.from_('Files').upload('{}/{}'.format(id,filename), request.FILES['uploadedfile'].file.getbuffer().tobytes(),
                                                            {'content-type': '{}'.format(mime_type),})
-                    return render(request, "loggedin.html", context={'username': username, "filenote": "File added successfully"})
+                    return render(request, "loggedin.html", context={'storage': storage, 'username': username, "filenote": "File added successfully"})
                 else:
                     return render(request, "loggedin.html",
-                                  context={'username': username, "filenote": "Wrong file format"})
+                                  context={'storage': storage, 'username': username, "filenote": "Wrong file format"})
             except Exception as e:
-                return render(request, "loggedin.html", context={'username': username, "filenote": "{}".format(e)})
-        return render(request, "loggedin.html", context={'username': username})
+                return render(request, "loggedin.html", context={'storage': storage, 'username': username, "filenote": "{}".format(e)})
+        return render(request, "loggedin.html", context={'storage': storage, 'username': username})
     else:
         return HttpResponseRedirect("/")
 
