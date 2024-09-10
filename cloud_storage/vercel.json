@@ -1,9 +1,4 @@
 {
-     "functions": {
-    "api/**": {
-      "excludeFiles": "{.next,*.cache,node_modules,public,app}/**"
-    }
-  },
     "builds": [{
         "src": "cloud_storage/wsgi.py",
         "use": "@vercel/python",
