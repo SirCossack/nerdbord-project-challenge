@@ -39,7 +39,7 @@
         <caption> Your files: </caption>
         <ul class="unorderedlist">
           {% for file in storage %}
-            <li class="listitem"> {{file.name}} <input name="download" class="button1" type="submit" value="{{file.name}}"> <input name="delete" class="button2" type="submit" value="Delete"> </li>
+            <li class="listitem"> {{file.name}} <input name="download" class="button1" type="submit" value="Download {{ file.name }}"> <input name="delete" class="button2" type="submit" value="Delete {{ file.name }}"> </li>
             {% endfor %}
         </ul>
     </form>

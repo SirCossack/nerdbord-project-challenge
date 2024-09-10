@@ -43,17 +43,34 @@ def login(request):
 
 def loggedin(request):
     user = supabase.auth.get_user()
+    print(request.POST)
     if user:
         id = json.loads(user.model_dump_json())['user']['id']
         username = json.loads(supabase.auth.get_user().model_dump_json())['user']['user_metadata']['email']
         storage = supabase.storage.from_('Files').list("{}".format(id))[1:] #skipping EmptyFolderPlaceholder object and ensuring each user gets his files by using folder id
         if request.POST.get('download'):
-            if user.aud == 'authenticated':
-                res = supabase.storage.from_('Files').create_signed_url('{}/{}'.format(id,request.POST.get('download')), 3600)['signedURL']
+            if json.loads(user.model_dump_json())['user']['aud'] == 'authenticated':
+                res = supabase.storage.from_('Files').create_signed_url('{}/{}'.format(id,request.POST.get('download').removeprefix("Download ")), 3600)['signedURL']
                 return HttpResponseRedirect(res) #Redirects to link where file can be seen and downloaded
             else:
                 return render(request, "loggedin.html",
-                              context={'storage': storage, 'username': username, "filenote": "Unauthenticated user, cannot download file"})
+                              context={'storage': storage, 'username': username, "deldow": "Unauthenticated user, cannot download file"})
+        if request.POST.get('delete'):
+            if json.loads(user.model_dump_json())['user']['aud'] == 'authenticated':
+                try:
+                    supabase.storage.from_('Files').remove('{}/{}'.format(id,request.POST.get('delete').removeprefix("Delete ")))
+                    return render(request, "loggedin.html",
+                                  context={'storage': storage, 'username': username,
+                                           "deldow": "File deleted successfully. "})
+                except Exception as e:
+                    return render(request, "loggedin.html",
+                                  context={'storage': storage, 'username': username,
+                                           "deldow": "Error occured, {}".format(e)})
+            else:
+                return render(request, "loggedin.html",
+                              context={'storage': storage, 'username': username,
+                                       "deldow": "Unauthenticated user, cannot delete file"})
+
         if request.FILES:
             try:
                 file = request.FILES['uploadedfile']
