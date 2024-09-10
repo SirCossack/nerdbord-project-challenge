@@ -1,7 +1,6 @@
-from . import auth
+import os
 from supabase import create_client
 
-
-url = auth.supabase_url
-key = auth.supabase_key
+url = os.getenv("supabase_url")
+key = os.getenv("supabase_key")
 supabase = create_client(url, key)
