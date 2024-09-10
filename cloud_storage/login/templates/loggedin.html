@@ -33,13 +33,16 @@
 </div>
 
 <div class="content">
+    <form action="/loggedin/" method="POST">
+        {% csrf_token %}
+    <caption>{{deldow}} </caption>
         <caption> Your files: </caption>
         <ul class="unorderedlist">
           {% for file in storage %}
-            <li class="listitem"> {{file.name}} <small> {{deldow}} </small>  </li>
+            <li class="listitem"> {{file.name}} <input name="download" class="button1" type="submit" value="{{file.name}}"> <input name="delete" class="button2" type="submit" value="Delete"> </li>
             {% endfor %}
         </ul>
-
+    </form>
 </div>
 </body>
 </html>
