@@ -5,7 +5,6 @@ from gotrue.errors import AuthApiError, AuthInvalidCredentialsError
 import json
 import mimetypes
 
-
 def loginpage(request):
     return render(request, 'login.html', context={'action': 'login', 'signorlog': "Log in:"})
 
@@ -48,6 +47,13 @@ def loggedin(request):
         id = json.loads(user.model_dump_json())['user']['id']
         username = json.loads(supabase.auth.get_user().model_dump_json())['user']['user_metadata']['email']
         storage = supabase.storage.from_('Files').list("{}".format(id))[1:] #skipping EmptyFolderPlaceholder object and ensuring each user gets his files by using folder id
+        if request.POST.get('download'):
+            if user.aud == 'authenticated':
+                res = supabase.storage.from_('Files').create_signed_url('{}/{}'.format(id,request.POST.get('download')), 3600)['signedURL']
+                return HttpResponseRedirect(res) #Redirects to link where file can be seen and downloaded
+            else:
+                return render(request, "loggedin.html",
+                              context={'storage': storage, 'username': username, "filenote": "Unauthenticated user, cannot download file"})
         if request.FILES:
             try:
                 file = request.FILES['uploadedfile']

@@ -76,7 +76,18 @@ div.content {
 .listitem {
   padding: 8px 16px;
   border-bottom: 1px solid #ddd;
+  position: relative;
 }
 .listitem:last-child {
-  border-bottom: none
+  border-bottom: none;
+}
+
+.button1 {
+position:absolute;
+right: 300px;
+}
+
+.button2 {
+position:absolute;
+right: 500px;
 }
