@@ -1,0 +1,39 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'loggedin.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <a class="username"> Welcome, {{username}}</a>
+  <form class="fileupload" enctype="multipart/form-data" action="/loggedin/" method="POST">
+      {% csrf_token %}
+        Choose a file to upload: <input name="uploadedfile" type="file"/>
+        <p>Supported MIME types: image/*, text/*</p>
+        <p>Max. size: 5MB</p>
+        <input type="submit" value="Submit" />
+      <p>{{filenote}}</p>
+    </form>
+
+    <form class="logout" action="/logout/" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Log out">
+    </form>
+
+
+
+</div>
+<div class="topbar">
+  <a class="passion"> fRom t ENd   iZ   m y  p a sSs I o n <3</a>
+</div>
+
+<div class="content">
+  loremipsum
+</div>
+</body>
+</html>
