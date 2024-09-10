@@ -25,8 +25,6 @@ idna==3.4
 imageio==2.34.2
 lazy_loader==0.4
 multidict==6.0.5
-mysql-connector-python==8.4.0
-mysqlclient==2.2.4
 Naked==0.1.32
 networkx==3.3
 numpy==2.0.0
